@@ -1,22 +1,28 @@
+from dataclasses import dataclass, field
+from collections import deque
+from typing import Optional
+import random
+
+
+@dataclass
 class Processo:
-    def __init__(self, id, tamanho, ciclo_chegada):
-        self.id = id
-        self.tamanho = tamanho
-        self.ciclo_chegada = ciclo_chegada
-        self.ciclo_alocado = None
+    id: int
+    tamanho: int
+    tempo_chegada: int
+    tempo_alocacao: int = -1
+    tempo_liberacao: int = -1
 
 
+@dataclass
 class Particao:
-    def __init__(self, id, tamanho, endereco_inicio):
-        self.id = id
-        self.tamanho = tamanho
-        self.endereco_inicio = endereco_inicio
-        self.processo = None
-
-    def esta_livre(self):
-        return self.processo is None
+    tamanho: int
+    endereco_inicial: int
+    endereco_final: int
+    ocupada: bool = False
+    processo: Optional[Processo] = None
 
 
+@dataclass
 class SistemaMemoria:
     def __init__(self, tamanhos_particoes):
         self.particoes = []
@@ -27,4 +33,3 @@ class SistemaMemoria:
         for i, tamanho in enumerate(tamanhos_particoes):
             self.particoes.append(Particao(i, tamanho, endereco))
             endereco += tamanho
-
