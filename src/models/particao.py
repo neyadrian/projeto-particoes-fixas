@@ -4,8 +4,11 @@ from src.models.processo import Processo
 
 @dataclass
 class Particao:
-    tamanho: int
-    endereco_inicial: int
-    endereco_final: int
-    ocupada: bool = False
-    processo: Optional[Processo] = None
+    def __init__(self, id, tamanho, endereco_inicio):
+        self.id = id
+        self.tamanho = tamanho
+        self.endereco_inicio = endereco_inicio
+        self.processo = None
+
+    def esta_livre(self):
+        return self.processo is None

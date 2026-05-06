@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Processo:
-    id: int
-    tamanho: int
-    tempo_chegada: int
-    tempo_alocacao: int = -1
-    tempo_liberacao: int = -1
+    def __init__(self, id, tamanho, ciclo_chegada):
+        self.id = id
+        self.tamanho = tamanho
+        self.ciclo_chegada = ciclo_chegada
+        self.ciclo_alocado = None

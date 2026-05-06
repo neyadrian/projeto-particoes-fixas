@@ -1,4 +1,5 @@
-from src.models.particao import Particao
+from models.processo import Processo
+from models.particao import Particao
 
 class SistemaMemoria:
     def __init__(self, tamanhos_particoes):
