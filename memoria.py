@@ -27,3 +27,4 @@ class SistemaMemoria:
         for i, tamanho in enumerate(tamanhos_particoes):
             self.particoes.append(Particao(i, tamanho, endereco))
             endereco += tamanho
+
