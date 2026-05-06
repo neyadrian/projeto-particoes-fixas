@@ -6,6 +6,8 @@ class SistemaMemoria:
         self.particoes = []
         self.fila_espera = []
         self.ciclo_atual = 0
+        self.total_fila = 0        
+        self.tempos_espera = []    
 
         endereco = 0
         for i, tamanho in enumerate(tamanhos_particoes):
@@ -23,6 +25,7 @@ class SistemaMemoria:
                 return True
             
         processo.ciclo_chegada = self.ciclo_atual
+        self.total_fila += 1
         self.fila_espera.append(processo)
         print(f"[Ciclo {self.ciclo_atual}] Processo {processo.id} ({processo.tamanho}u) -> FILA DE ESPERA")
         return False
@@ -39,6 +42,7 @@ class SistemaMemoria:
                     if particao.tamanho >= processo_fila.tamanho:
                         particao.processo = processo_fila
                         processo_fila.ciclo_alocado = self.ciclo_atual
+                        self.tempos_espera.append(processo_fila.ciclo_alocado - processo_fila.ciclo_chegada)
                         self.fila_espera.remove(processo_fila)
                         print(f"[Ciclo {self.ciclo_atual}] Processo {processo_fila.id} saiu da fila -> Partição {particao.id}")
                         return True
@@ -46,3 +50,30 @@ class SistemaMemoria:
 
         print(f"[Ciclo {self.ciclo_atual}] Processo {id_processo} não encontrado")
         return False
+    
+    def relatorio(self):
+        print("\n========== RELATÓRIO FINAL ==========")
+
+        print(f"Processos que entraram na fila: {self.total_fila}")
+
+        if self.tempos_espera:
+            media_espera = sum(self.tempos_espera) / len(self.tempos_espera)
+        else:
+            media_espera = 0
+        print(f"Tempo médio de espera: {media_espera:.2f} ciclos")
+
+        utilizacoes = []
+        for p in self.particoes:
+            if not p.esta_livre():
+                utilizacoes.append(p.processo.tamanho / p.tamanho * 100)
+        media_util = sum(utilizacoes) / len(utilizacoes) if utilizacoes else 0
+        print(f"Utilização média das partições: {media_util:.2f}%")
+
+        memoria_total = sum(p.tamanho for p in self.particoes)
+        frag_interna = sum(
+            p.tamanho - p.processo.tamanho
+            for p in self.particoes
+            if not p.esta_livre()
+        )
+        print(f"Fragmentação interna total: {frag_interna / memoria_total * 100:.2f}%")
+        print("=====================================\n")
