@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
-from src.models.processo import Processo
+from models.processo import Processo
 
 @dataclass
 class Particao:
