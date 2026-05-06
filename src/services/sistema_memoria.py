@@ -25,3 +25,23 @@ class SistemaMemoria:
         self.fila_espera.append(processo)
         print(f"[Ciclo {self.ciclo_atual}] Processo {processo.id} ({processo.tamanho}u) -> FILA DE ESPERA")
         return False
+    
+    def liberar(self, id_processo):
+        self.ciclo_atual += 1
+
+        for particao in self.particoes:
+            if particao.processo and particao.processo.id == id_processo:
+                print(f"[Ciclo {self.ciclo_atual}] Processo {id_processo} liberou Partição {particao.id}")
+                particao.processo = None
+
+                for processo_fila in self.fila_espera:
+                    if particao.tamanho >= processo_fila.tamanho:
+                        particao.processo = processo_fila
+                        processo_fila.ciclo_alocado = self.ciclo_atual
+                        self.fila_espera.remove(processo_fila)
+                        print(f"[Ciclo {self.ciclo_atual}] Processo {processo_fila.id} saiu da fila -> Partição {particao.id}")
+                        return True
+                return True
+
+        print(f"[Ciclo {self.ciclo_atual}] Processo {id_processo} não encontrado")
+        return False
