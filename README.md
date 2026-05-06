@@ -127,6 +127,13 @@ Ocorre quando o processo é menor que a partição. O espaço excedente fica inu
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
-Desenvolvido por **Neyadrian** — Sistemas Operacionais
+Este projeto foi desenvolvido como parte da disciplina de **Sistemas Operacionais**, referente ao 3º semestre do curso de **Engenharia de Software** do **IFCE — Campus Acopiara**.
+
+*   **Ney Adrian**
+*   **Ítalo Renan**
+*   **Isaque Almeida**
+*   **Yuri Carlos**
+*   **Joarley Anderson**
+*   **Isaías Veríssimo**
